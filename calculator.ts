@@ -1,45 +1,6 @@
 import { createInterface, type Interface } from "node:readline/promises";
 import { stdin, stdout } from "node:process";
-
-const operators = ["+", "-", "*", "/"] as const;
-
-type Operator = (typeof operators)[number];
-
-function add(a: number, b: number): number {
-  return a + b;
-}
-
-function isOperator(text: string): text is Operator {
-  return (operators as readonly string[]).includes(text);
-}
-
-function subtract(a: number, b: number): number {
-  return a - b;
-}
-
-function multiply(a: number, b: number): number {
-  return a * b;
-}
-
-function divide(a: number, b: number): number {
-  if (b === 0) {
-    throw new Error("Cannot divide by zero");
-  }
-  return a / b;
-}
-
-function calculate(a: number, op: Operator, b: number): number {
-  switch (op) {
-    case "+":
-      return add(a, b);
-    case "-":
-      return subtract(a, b);
-    case "*":
-      return multiply(a, b);
-    case "/":
-      return divide(a, b);
-  }
-}
+import { calculate, isOperator, type Operator } from "./operations.js";
 
 function parseNumber(text: string): number {
   const trimmed = text.trim();
