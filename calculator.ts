@@ -1,4 +1,4 @@
-import { createInterface } from "node:readline/promises"
+import { createInterface, type Interface } from "node:readline/promises"
 import { stdin, stdout } from "node:process"
 
 type Operator = "+" | "-" | "*" | "/"
@@ -53,8 +53,21 @@ function parseNumber(text: string): number {
     return value
 }
 
-const answer = await rl.question("Enter your first number: ")
-const first = parseNumber(answer)
+async function askNumber(rl: Interface, prompt: string): Promise<number> {
+    while(true){
+        const answer = await rl.question(prompt)
+        try {
+            return parseNumber(answer)
+        } catch (error) {
+            if(error instanceof Error){
+                console.log(`${error.message}. Try again.`)
+            }
+        }
+    }
+}
+
+
+const first = await askNumber(rl, "Enter the first number: ")
 console.log(`You typed: ${first} (${typeof first})`)
 
 rl.close()
