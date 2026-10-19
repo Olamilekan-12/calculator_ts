@@ -37,6 +37,10 @@ async function askOperator(rl: Interface, prompt: string): Promise<Operator> {
   }
 }
 
+function formatResult(value: number): number {
+    return Number(value.toPrecision(12))
+}
+
 const rl = createInterface({
   input: stdin,
   output: stdout,
@@ -49,7 +53,7 @@ while (true) {
 
   try {
     const result = calculate(first, op, second);
-    console.log(`${first} ${op} ${second} = ${result}`);
+    console.log(`${first} ${op} ${second} = ${formatResult(result)}`);
   } catch (error) {
     if (error instanceof Error) {
       console.log(`Error: ${error.message}`);
