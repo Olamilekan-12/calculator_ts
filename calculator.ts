@@ -38,7 +38,7 @@ async function askOperator(rl: Interface, prompt: string): Promise<Operator> {
 }
 
 function formatResult(value: number): number {
-    return Number(value.toPrecision(12))
+  return Number(value.toPrecision(12));
 }
 
 const rl = createInterface({
@@ -46,24 +46,34 @@ const rl = createInterface({
   output: stdout,
 });
 
-while (true) {
-  const first = await askNumber(rl, "Enter the first number: ");
-  const op = await askOperator(rl, "Enter an operator (+, -, *, /): ");
-  const second = await askNumber(rl, "Enter the second number: ");
+try {
+  while (true) {
+    const first = await askNumber(rl, "Enter the first number: ");
+    const op = await askOperator(rl, "Enter an operator (+, -, *, /): ");
+    const second = await askNumber(rl, "Enter the second number: ");
 
-  try {
-    const result = calculate(first, op, second);
-    console.log(`${first} ${op} ${second} = ${formatResult(result)}`);
-  } catch (error) {
-    if (error instanceof Error) {
-      console.log(`Error: ${error.message}`);
+    try {
+      const result = calculate(first, op, second);
+      console.log(`${first} ${op} ${second} = ${formatResult(result)}`);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(`Error: ${error.message}`);
+      }
+    }
+
+    const again = (await rl.question("Calculate again? (y/n): "))
+      .trim()
+      .toLowerCase();
+    if (again !== "y") {
+      break;
     }
   }
-
-  const again = (await rl.question("Calculate again? (y/n): ")).trim().toLowerCase()
-  if (again !== "y"){
-    break
+} catch (error) {
+  if (error instanceof Error && error.name === "AbortError") {
+    console.log("\nGoodbye");
+  } else {
+    throw error;
   }
+} finally {
+  rl.close();
 }
-
-rl.close();
