@@ -89,6 +89,15 @@ const rl = createInterface({
 
 const first = await askNumber(rl, "Enter the first number: ")
 const op = await askOperator(rl, "Enter an operator (+, -, *, /): ")
-console.log(`You typed: ${first} ${op}`)
+const second = await askNumber(rl, "Enter the second number: ")
+
+try {
+    const result = calculate(first, op, second)
+    console.log(`${first} ${op} ${second} = ${result}`)
+} catch (error) {
+    if(error instanceof Error){
+        console.log(`Error: ${error.message}`)
+    }
+}
 
 rl.close()
