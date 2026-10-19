@@ -1,9 +1,16 @@
 import { createInterface, type Interface } from "node:readline/promises"
 import { stdin, stdout } from "node:process"
 
-type Operator = "+" | "-" | "*" | "/"
+const operators = ["+", "-", "*", "/"] as const
+
+type Operator = (typeof operators)[number]
+
 function add(a: number, b: number): number {
     return a + b
+}
+
+function isOperator(text : string): text is Operator{
+    return (operators as readonly string[]).includes(text)
 }
 
 function subtract(a: number, b: number): number {
@@ -36,10 +43,7 @@ function calculate(a: number, op: Operator, b: number): number{
 }
 
 
-const rl = createInterface({
-    input : stdin,
-    output : stdout
-})
+
 
 function parseNumber(text: string): number {
     const trimmed = text.trim()
@@ -66,8 +70,25 @@ async function askNumber(rl: Interface, prompt: string): Promise<number> {
     }
 }
 
+async function askOperator(rl: Interface, prompt: string): Promise<Operator> {
+    while(true){
+        const answer = (await rl.question(prompt)).trim()
+        if(isOperator(answer)){
+            return answer
+        }
+        console.log(`${answer} is not an operator. Use + - * or /. Try again.`)
+    }
+}
+
+
+const rl = createInterface({
+    input : stdin,
+    output : stdout
+})
+
 
 const first = await askNumber(rl, "Enter the first number: ")
-console.log(`You typed: ${first} (${typeof first})`)
+const op = await askOperator(rl, "Enter an operator (+, -, *, /): ")
+console.log(`You typed: ${first} ${op}`)
 
 rl.close()
