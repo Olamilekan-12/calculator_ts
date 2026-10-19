@@ -42,6 +42,7 @@ const rl = createInterface({
 })
 
 const answer = await rl.question("Enter your first number: ")
-console.log(`You typed: ${answer} (${typeof answer})`)
+const first = Number(answer)
+console.log(`You typed: ${first} (${typeof first})`)
 
 rl.close()
