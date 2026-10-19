@@ -12,6 +12,9 @@ function multiply(a: number, b: number): number {
 }
 
 function divide(a: number, b: number): number {
+    if(b=== 0){
+        throw new Error("Cannot divide by zero")
+    }
     return a / b
 }
 
@@ -29,7 +32,14 @@ function calculate(a: number, op: Operator, b: number): number{
     }
 }
 
-console.log(calculate(10, "+", 4));
-console.log(calculate(10, "-", 4));
-console.log(calculate(10, "*", 4));
-console.log(calculate(10, "/", 4));
+
+console.log(calculate(10, "/", 4))
+
+
+try {
+    console.log(calculate(4, "/", 0))
+} catch (error) {
+    if (error instanceof Error){
+        console.log(error.message)
+    }
+}
