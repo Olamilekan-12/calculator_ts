@@ -4,11 +4,12 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build" : "tsc",
-        "start" : "node dist/calculator.js",
-        "dev" : "tsc && node dist/calculator.js"
+        "build": "tsc",
+        "start": "node dist/calculator.js",
+        "dev": "tsc && node dist/calculator.js"
     },
     "devDependencies": {
+        "@types/node": "^26.6.5",
         "typescript": "^7.0.2"
     }
 }
