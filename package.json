@@ -3,6 +3,11 @@
     "version": "1.0.0",
     "private": true,
     "type": "module",
+    "scripts": {
+        "build" : "tsc",
+        "start" : "node dist/calculator.js",
+        "dev" : "tsc && node dist/calculator.js"
+    },
     "devDependencies": {
         "typescript": "^7.0.2"
     }
