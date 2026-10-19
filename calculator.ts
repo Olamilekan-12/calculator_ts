@@ -41,8 +41,20 @@ const rl = createInterface({
     output : stdout
 })
 
+function parseNumber(text: string): number {
+    const trimmed = text.trim()
+    if(trimmed === ""){
+        throw new Error("Please enter a number");
+    }
+    const value = Number(trimmed)
+    if(!Number.isFinite(value)){
+        throw new Error(`"${trimmed}" is not a valid number`)
+    }
+    return value
+}
+
 const answer = await rl.question("Enter your first number: ")
-const first = Number(answer)
+const first = parseNumber(answer)
 console.log(`You typed: ${first} (${typeof first})`)
 
 rl.close()
