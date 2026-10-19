@@ -1,3 +1,6 @@
+import { createInterface } from "node:readline/promises"
+import { stdin, stdout } from "node:process"
+
 type Operator = "+" | "-" | "*" | "/"
 function add(a: number, b: number): number {
     return a + b
@@ -33,13 +36,12 @@ function calculate(a: number, op: Operator, b: number): number{
 }
 
 
-console.log(calculate(10, "/", 4))
+const rl = createInterface({
+    input : stdin,
+    output : stdout
+})
 
+const answer = await rl.question("Enter your first number: ")
+console.log(`You typed: ${answer} (${typeof answer})`)
 
-try {
-    console.log(calculate(4, "/", 0))
-} catch (error) {
-    if (error instanceof Error){
-        console.log(error.message)
-    }
-}
+rl.close()
